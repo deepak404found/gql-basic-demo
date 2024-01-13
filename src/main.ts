@@ -4,6 +4,8 @@ import { loadSchemaSync } from '@graphql-tools/load'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import Resolvers from "./resolvers/index";
+import mongoose from "mongoose";
+import { vars } from "./env";
 
 const typeDefs = loadSchemaSync('src/schema/**/*.gql', {
     loaders: [new GraphQLFileLoader()],
@@ -18,11 +20,13 @@ async function startApolloServer() {
     const server = new ApolloServer({
         schema: mods,
     });
-    const { url } = await startStandaloneServer(server);
-    console.log(`
-      🚀  Server is running!
-      📭  Query at ${url}
-    `);
+
+    mongoose
+        .connect(vars.mongoURI)
+        .then(async () => {
+            const { url } = await startStandaloneServer(server);
+            console.log(`🚀 Server ready at ${url}`)
+        })
 }
 
 startApolloServer();

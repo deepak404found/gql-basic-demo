@@ -1,5 +1,7 @@
+import { Resolvers } from "../generated/graphql"
+import UsersModel from "../models/UsersModel"
 
-const userResolver = {
+const userResolver: Resolvers = {
     Query: {
         getUsers: async () => {
             return [
@@ -10,7 +12,11 @@ const userResolver = {
                     password: "password",
                 },
             ]
-        }
+        },
+        getUser: async (_, { username, password }) => {
+            const user = UsersModel.findOne({ username, password })
+            return user
+        },
     },
     User: {
         posts: async () => {
@@ -19,7 +25,6 @@ const userResolver = {
                     id: 1,
                     title: "Sample post",
                     body: "This is a sample post",
-                    createdAt: "2021-01-01 10:00:00",
                 }
             ]
         }

@@ -1,21 +1,19 @@
 
 type User {
-  id: ID
-  name: String
-  email: String
+  uid: String
+  fullName: String
+  username: String
   password: String
-  createdAt: String
   posts: [Post]
 }
 
 type Post {
-  id: ID
+  id: Int
   title: String
   body: String
-  createdAt: String
 }
 
 type Query {
   getUsers: [User]
-  getUser(id: ID): User
+  getUser(username: String!, password: String!): User
 }
