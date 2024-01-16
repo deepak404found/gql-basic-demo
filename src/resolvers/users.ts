@@ -18,6 +18,12 @@ const userResolver: Resolvers = {
             return user
         },
     },
+    Mutation: {
+        createUser: async (parent, {form}, context, info) => {
+            const user = UsersModel.create(form)
+            return user
+        },
+    },
     User: {
         posts: async () => {
             return [
