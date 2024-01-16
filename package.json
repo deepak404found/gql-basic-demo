@@ -12,7 +12,7 @@
 		"start": "node dist/server",
 		"dev": "nodemon --require dotenv/config dist/server",
 		"eslint": "./node_modules/eslint/bin/eslint.js src/*/**",
-		"devStart": "npm-run-all -p build:dev dev",
+		"devStart": "npm-run-all -p build:dev dev codegen",
 		"codegen": "graphql-codegen --config codegen.ts --watch"
 	},
 	"repository": {

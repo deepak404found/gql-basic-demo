@@ -19,11 +19,21 @@ input UserInput {
   password: String
 }
 
+type UserExists {
+  message: String!
+  username: String
+}
+
+union UserOrPostRes = User | Post 
+union UserResult = User | NotFound | BadUserInput | Unauthorized | InternalServerError
+union CreateUserResult = User | BadUserInput | InternalServerError | UserExists
+
 type Query {
   getUsers: [User]
-  getUser(username: String!, password: String!): User
+  getUser(username: String!, password: String!): UserResult
+  getUserOrPost(id: String!): UserOrPostRes
 }
 
 type Mutation {
-  createUser(form:UserInput!): User
+  createUser(form:UserInput!): CreateUserResult
 }
